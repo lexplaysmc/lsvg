@@ -8,5 +8,5 @@ curves.extend([Bezier((0, 0), (100, 0), (0, 100), (0, 0)), Bezier((0, 0), (-100,
 #curves.extend([Circle((0, 0), 200)])
 canvas=Canvas(700, 500, *curves)
 
-canvas.rasterlib(step=1000).save('img.png')
+canvas.rasterize(step=1000).save('img.png')
 canvas.save()

@@ -15,4 +15,4 @@ canvas=lsvg.Canvas(500, 300, chain)#*lsvg.lib.beziertri.fill_tri(100, 100, -100,
 
 chain.move(0, 0, [-abs(100*m.sin(1.5)), 0])
 chain.move(1, 0, [50*m.sin(1), 50*m.cos(1)], relative=True)
-canvas.rasterlib().save('img.png')
+canvas.rasterize().save('img.png')
