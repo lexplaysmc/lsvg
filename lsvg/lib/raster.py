@@ -2,9 +2,9 @@ import numpy, lsvg.shapes.bezier as bezier, PIL.Image
 import lsvg.shapes
 from .trifill import drawTriangle
 
-def rasterize(objects, height, width, tl, step:int=10000, res:int=3, antialiasres:int=2) -> PIL.Image.Image:
+def rasterize(objects, height, width, tl, step:int=10000, res:int=3, antialiasres:int=2, bgcol:tuple=(0, 0, 0)) -> PIL.Image.Image:
     antialiasres*=res
-    img=numpy.zeros((height*antialiasres, width*antialiasres, 3), dtype=numpy.uint8)
+    img=numpy.full((height*antialiasres, width*antialiasres, 3), bgcol, dtype=numpy.uint8)
     #setup
     processed=[]
     for x in objects:

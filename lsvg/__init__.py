@@ -13,11 +13,12 @@ class Canvas:
     '''`lsvg.Canvas` Object
     
     A canvas used to rasterize objects in `lsvg.shapes`'''
-    def __init__(self, width:int, height:int, *args, tlpos:tuple=None) -> None:
+    def __init__(self, width:int, height:int, *args, tlpos:tuple=None, bgcol:tuple=(0, 0, 0)) -> None:
         self.width=width
         self.height=height
         self.tlpos=tlpos
         self.objects=args
+        self.bgcol=bgcol
         if not tlpos:
             self.tlpos=(-width/2, -height/2)
     
@@ -27,7 +28,7 @@ class Canvas:
         `step` -> resolution of bezier curves
         `res` -> resolution of final image (multiplied by canvas size)
         `antialiasres` -> resolution to render at (multiplied by `res` and the canvas size)'''
-        return lsvg.lib.raster.rasterize(self.objects, self.height, self.width, self.tlpos, step, res, antialiasres)
+        return lsvg.lib.raster.rasterize(self.objects, self.height, self.width, self.tlpos, step, res, antialiasres, self.bgcol)
 
     def visualize(self) -> None:
         '''Draws the canvas outline to a turtle window.'''
