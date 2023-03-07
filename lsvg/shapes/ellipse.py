@@ -23,14 +23,13 @@ class Ellipse:
         self.curves=self._recurve()
 
     def draw(self, step:int=None) -> list:
+        '''Returns `step*2` points on the ellipse.'''
         if step==None:
             step=self.step
         return self.curves[0].draw(step)+self.curves[1].draw(step)
 
-    def drawfill(self):
-        x=m.sqrt((self.thickness*2)**2/2)
-
     def _recurve(self) -> list:
+        '''Remakes the bezier curves in the ellipse.'''
         width_two_thirds = self.radiuses[0] * 4 / 3
         dx1 = m.sin(self.rot) * self.radiuses[1]
         dy1 = m.cos(self.rot) * self.radiuses[1]
@@ -63,10 +62,12 @@ class Circle:
         self.curves=self._recurve()
 
     def _recurve(self) -> list:
+        '''Remakes the bezier curves in the circle.'''
         self._ellipse=Ellipse(self.pos, [self.radius, self.radius], color=self.color, thickness=self.thickness, step=self.step)
         return self._ellipse._recurve()
 
     def draw(self, step:int=None) -> list:
+        '''Returns `step*2` points on the circle.'''
         if step==None:
             step=self.step
         return self.curves[0].draw(step)+self.curves[1].draw(step)

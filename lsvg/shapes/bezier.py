@@ -26,6 +26,7 @@ class Bezier:
             self.curvetype=1
             self.points=[point1, point2]
     def draw(self, step:int=None) -> list:
+        '''Returns `step` evenly spaced points on the bezier curve'''
         points=[]
         if step==None:
             step=self.step
@@ -50,6 +51,7 @@ class BezierChain:
     def __init__(self) -> None:
         self.curves=[]
     def add(self, curve:Bezier) -> None:
+        '''Adds a curve to the chain and links it smoothly'''
         if self.curves:
             self.curves.append(curve)
             self.link(-1)
@@ -73,6 +75,7 @@ class BezierChain:
             self.update()
 
     def link(self, i:int) -> list:
+        '''Links the chain smoothly at one connection so that control points are opposite to each other and end points are at the same point.'''
         if i==0:
             self.curves[0].points[-1]=self.curves[-1].points[0]
             self.curves[0].points[-2]=flip(self.curves[-1].points[1], self.curves[-1].points[0])
@@ -81,6 +84,7 @@ class BezierChain:
             self.curves[i].points[-2]=flip(self.curves[i-1].points[1], self.curves[i-1].points[0])
 
     def update(self, ord:int=1) -> None:
+        '''Links the whole chain smoothly so that control points are opposite to each other and end points are at the same point.'''
         for x in range(*sorted([0, len(self.curves)-1], reverse=bool(1-(ord+1)/2)), ord):
             self.link(x)
 
@@ -88,9 +92,11 @@ class BezierChain:
         return self.curves
         
 def flip(pos1:tuple, pos2:tuple) -> list:
+    '''Mirrors a point around another point on both axes.'''
     return [pos2[0]-(pos1[0]-pos2[0]), pos2[1]-(pos1[1]-pos2[1])]
 
 def draw(curve:Bezier, points:bool=False) -> None:
+    '''Draws a bezier curve in a turtle window'''
     t.pensize(curve.thickness)
     if points:
         t.pencolor('red')
@@ -110,5 +116,6 @@ def draw(curve:Bezier, points:bool=False) -> None:
     t.penup()
 
 def draw_chain(curves:BezierChain, points:bool=False) -> None:
+    '''Draws a bezier chain in a turtle window'''
     for x in curves:
         draw(x, points)

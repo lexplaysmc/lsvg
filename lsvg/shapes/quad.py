@@ -7,7 +7,6 @@ Objects:
 '''
 
 from .bezier import Bezier
-from lsvg.lib.trifill import drawTriangle
 
 class Quad:
     '''`lsvg.shapes.quad.Quad` Object
@@ -22,14 +21,17 @@ class Quad:
         self.fill=fillcolor
 
     def draw(self, step:int=None) -> list:
+        '''Returns `step*4` points on the quadrilateral.'''
         if step==None:
             step=self.step
         return self.curves[0].draw(step)+self.curves[1].draw(step)+self.curves[2].draw(step)+self.curves[3].draw(step)
 
     def _recurve(self):
+        '''Remakes the bezier curves in the quadrilateral.'''
         return [Bezier(self.points[0], self.points[1]), Bezier(self.points[1], self.points[2]), Bezier(self.points[2], self.points[3]), Bezier(self.points[3], self.points[0])]
     
     def _tripoints(self):
+        '''Returns the points of two triangles to be filled'''
         return [self.points[0:3], self.points[2:]+[self.points[0]]]
 
 
@@ -46,14 +48,17 @@ class Rect:
         self.curves=self._recurve()
 
     def draw(self, step:int=None) -> list:
+        '''Returns `step*4` points on the rectangle.'''
         if step==None:
             step=self.step
         return self.curves[0].draw(step)+self.curves[1].draw(step)+self.curves[2].draw(step)+self.curves[3].draw(step)
         
     def _recurve(self):
+        '''Remakes the bezier curves in the rectangle.'''
         self._quad=Quad(self.points[0], [self.points[0][0], self.points[1][1]], self.points[1], [self.points[1][0], self.points[0][1]])
         return self._quad._recurve()
     
     def _tripoints(self):
+        '''Returns the points of two triangles to be filled'''
         self._quad=Quad(self.points[0], [self.points[0][0], self.points[1][1]], self.points[1], [self.points[1][0], self.points[0][1]])
         return self._quad._tripoints()
