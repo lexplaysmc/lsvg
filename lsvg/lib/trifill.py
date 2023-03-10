@@ -1,5 +1,4 @@
-import numpy
-from .__init__ import fix_uv
+from . import fix_uv, set_point
 
 class Vec2:
     def __init__(self, x, y) -> None:
@@ -53,9 +52,8 @@ GREEN = (0, 255, 0)
 def drawLine(p1, p2, img, col):
     # DRAWS A LINE BY FILLING IN THE PIXELS RETURNED BY getLine
     points = getLine(p1, p2)
-    pixels = len(points)
-    for i in range(pixels):
-        img[points[i].y][points[i].x]=col
+    for point in points:
+        set_point(img, point.x, point.y, col)
 
 # TRIANGLE
 v1 = Vec2(500, 500)
@@ -105,7 +103,7 @@ def drawTriangle(v1, v2, v3, img, tlpos, res, col):
     v1, v2, v3 = v[0], v[1], v[2]
 
     if v1.y == v2.y == v3.y:
-        drawLine(v1, v2, img)
+        drawLine(v1, v2, img, col)
     elif v2.y == v3.y:
         fillFlatBottom(v1, v2, v3, img, col)
     elif v1.y == v2.y:

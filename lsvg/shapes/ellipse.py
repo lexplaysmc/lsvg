@@ -13,8 +13,9 @@ class Ellipse:
     '''`lsvg.shapes.ellipse.Ellipse` Object
     
     An ellipse which can be drawn with variable precision, thickness and color'''
-    def __init__(self, pos:tuple, radiuses:tuple, rotation:int=0, color:tuple=(255, 255, 255), thickness:int=2, step:int=100) -> None:
-        self.color=color
+    def __init__(self, pos:tuple, radiuses:tuple, rotation:int=0, linecolor:tuple=(255, 255, 255), fillcolor:tuple=(255, 0, 0), thickness:int=2, step:int=100) -> None:
+        self.color=linecolor
+        self.fill=fillcolor
         self.thickness=thickness
         self.step=step
         self.pos=pos
@@ -53,8 +54,9 @@ class Circle:
     '''`lsvg.shapes.ellipse.Circle` Object
     
     A circle which can be drawn with variable precision, thickness and color'''
-    def __init__(self, pos:tuple, radius:int, color:tuple=(255, 255, 255), thickness:int=2, step:int=100) -> None:
-        self.color=color
+    def __init__(self, pos:tuple, radius:int, linecolor:tuple=(255, 255, 255), fillcolor:tuple=(255, 0, 0), thickness:int=2, step:int=100) -> None:
+        self.color=linecolor
+        self.fill=fillcolor
         self.thickness=thickness
         self.step=step
         self.pos=pos
