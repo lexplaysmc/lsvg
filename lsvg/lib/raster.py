@@ -1,7 +1,7 @@
 import numpy, lsvg.shapes.bezier as bezier, PIL.Image
 import lsvg.shapes
 from .trifill import drawTriangle
-from .ellipsefill import fill_circle1
+from .ellipsefill import fill_circle
 from . import set_point
 
 def rasterize(objects, height, width, tl, step:int=10000, res:int=3, antialiasres:int=2, bgcol:tuple=(0, 0, 0)) -> PIL.Image.Image:
@@ -16,12 +16,11 @@ def rasterize(objects, height, width, tl, step:int=10000, res:int=3, antialiasre
             for y in x.curves:
                 processed.append([y.color, None, [y], []])
         elif isinstance(x, (lsvg.shapes.Circle, lsvg.shapes.Ellipse)):
-            processed.append([x.color, x.fill, x.curves, fill_circle1(x.curves)])
+            processed.append([x.color, x.fill, x.curves, fill_circle(x.curves)])
         else:
             processed.append([x.color, x.fill, x.curves, x._tripoints()])
     #rasterisation
     for color, fill, curves, tris in processed:
-        print(tris)
         if tris and fill:
             for tri in tris:
                 drawTriangle(*tri, img, tl, antialiasres, numpy.asarray(fill, dtype=numpy.uint8))
